@@ -15,6 +15,9 @@ int main(void) {
     
     int fd;
 
+    ssize_t ret;
+    unsigned long word;
+
     fd = open ("/c-example/file/test.txt", O_WRONLY | O_CREAT | O_EXCL);
 
     if (fd == -1) {
@@ -22,7 +25,19 @@ int main(void) {
 	return 1;	
     }
 
-    printf("%d\n", fd);
+    while (len != 0 && (ret = read (fd, word, (unsigned long))) != 0) {
+	if (ret == -1) {
+	    if (errno == EINTR) 
+		continue;
+
+	    perror ("read");
+	    break;
+	}
+
+	len -= ret;
+	buf += ret;
+    }
+
 
     close(fd);
 
