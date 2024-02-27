@@ -7,6 +7,8 @@
 /**
 int open (const char *name, int flags);
 int open (const char *name, int flags, mode_t mode);
+int creat (const char *name, mode_t mode);
+ssize_t read(int fd, void *buf, size_t len);
 **/
 
 int main(void) {
