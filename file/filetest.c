@@ -9,13 +9,25 @@ int open (const char *name, int flags);
 int open (const char *name, int flags, mode_t mode);
 int creat (const char *name, mode_t mode);
 ssize_t read(int fd, void *buf, size_t len);
+
+논블록 읽기
+if (ret == -1) {
+   if (errno == EINTR)
+  	goto start;
+   if (errno == EAGAIN)
+  	나중에 다시 시도
+   else
+        에러   
+}
+ 
 **/
 
 int main(void) {
     
-    int fd;
 
+    int fd;
     ssize_t ret;
+
     unsigned long word;
 
     fd = open ("/c-example/file/test.txt", O_WRONLY | O_CREAT | O_EXCL);
