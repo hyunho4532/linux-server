@@ -9,17 +9,19 @@ int open (const char *name, int flags);
 int open (const char *name, int flags, mode_t mode);
 int creat (const char *name, mode_t mode);
 ssize_t read(int fd, void *buf, size_t len);
+ssize_t write(int fd, const void *buf, size_t count);
 
-논블록 읽기
 if (ret == -1) {
    if (errno == EINTR)
   	goto start;
    if (errno == EAGAIN)
-  	나중에 다시 시도
-   else
-        에러   
-}
  
+   else
+     
+}
+
+
+
 **/
 
 int main(void) {
@@ -29,6 +31,8 @@ int main(void) {
     ssize_t ret;
 
     unsigned long word;
+    const char *buf = "My ship is solid!";
+    ssize_t nr;
 
     fd = open ("/c-example/file/test.txt", O_WRONLY | O_CREAT | O_EXCL);
 
@@ -50,6 +54,11 @@ int main(void) {
 	buf += ret;
     }
 
+    nr = white (fd, buf, strlen(buf));
+
+    if (nr == -1) {
+	printf("file is not write");
+    }
 
     close(fd);
 
